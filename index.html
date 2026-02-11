@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Dashboard</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #111 0%, #000 70%);
+  color: white;
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+  overflow: hidden;
+}
+
+.clock {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.location {
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 60%;
+  perspective: 1000px;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  background: #111;
+  box-shadow: 0 0 30px rgba(255,255,255,0.05);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.card h1 {
+  font-size: 64px;
+  margin: 0 0 20px 0;
+}
+
+.card p {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.card:nth-child(1) { transform: translateZ(0px) scale(1); opacity: 1; }
+.card:nth-child(2) { transform: translateZ(-80px) scale(0.9); opacity: 0.6; }
+.card:nth-child(3) { transform: translateZ(-160px) scale(0.8); opacity: 0.4; }
+.card:nth-child(4) { transform: translateZ(-240px) scale(0.7); opacity: 0.2; }
+
+.accent-weather { color: #4FC3F7; }
+.accent-calendar { color: #FFD54F; }
+.accent-news { color: #E0E0E0; }
+.accent-alert { color: #EF5350; }
+
+</style>
+</head>
+<body>
+
+<div class="clock" id="clock">
+  <div id="time"></div>
+  <div id="date"></div>
+  <div class="location">岡山市中区</div>
+</div>
+
+<div class="container" id="cards">
+  <div class="card">
+    <h1 class="accent-weather">☀ 8℃</h1>
+    <p>午前：晴れ → 午後：くもり</p>
+    <p>降水確率 20%</p>
+    <p>黄砂：やや注意</p>
+  </div>
+
+  <div class="card">
+    <h1 class="accent-calendar">📅 今日の予定</h1>
+    <p>10:00 会議</p>
+    <p>14:30 打ち合わせ</p>
+    <p>19:00 夕食</p>
+  </div>
+
+  <div class="card">
+    <h1 class="accent-news">📰 地元ニュース</h1>
+    <p>中区で新店舗オープン</p>
+    <p>岡山城イベント開催</p>
+    <p>交通情報：混雑なし</p>
+  </div>
+
+  <div class="card">
+    <h1 class="accent-alert">🚨 緊急情報</h1>
+    <p>現在、緊急情報はありません</p>
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString('ja-JP', {hour: '2-digit', minute:'2-digit'});
+  const date = now.toLocaleDateString('ja-JP', {year:'numeric', month:'2-digit', day:'2-digit', weekday:'short'});
+  document.getElementById("time").textContent = time;
+  document.getElementById("date").textContent = date;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+const container = document.getElementById("cards");
+
+setInterval(() => {
+  const first = container.firstElementChild;
+  container.appendChild(first);
+}, 10000);
+
+</script>
+
+</body>
+</html>
